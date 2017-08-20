@@ -27,6 +27,9 @@ public partial class GameManager : Singleton<GameManager> {
 	private MapTableHandler mapTableHandler = new MapTableHandler();
 
 	private int stageCount = 5;
+	private GameMission missionNow = new GameMission();
+	private GameMission missionStage = new GameMission();
+	private bool isMissionClear = false;
 
 	protected override void Awake()
 	{
@@ -37,6 +40,37 @@ public partial class GameManager : Singleton<GameManager> {
 			StageData stageData = stageTableHandler.GetStageData(i);
 			mapTableHandler.InitData(i, stageData.mapWidth, stageData.mapHeight);
 		}
+	}
+
+	public void StartMission(int stageIndex)
+	{
+		missionNow.stageIndex = stageIndex;
+		missionNow.timeCount = 0;
+		missionNow.killCount = 0;
+		missionNow.saveCount = 0;
+		missionStage = GetStage(stageIndex).mapMission;
+		isMissionClear = false;
+	}
+
+	public void MissionKillAdd(int value)
+	{
+		missionNow.killCount += value;
+	}
+
+	public void MissionSaveAdd(int value)
+	{
+		missionNow.saveCount += value;
+	}
+
+	public bool IsMissionCleared()
+	{
+		bool isKillOver = missionNow.killCount >= missionStage.killCount;
+		bool isSaveOver = missionNow.saveCount >= missionStage.saveCount;
+		Debug.Log(string.Format("kill = ({0}/{1}) | save = ({2}/{3})",
+			missionNow.killCount, missionStage.killCount,
+			missionNow.saveCount, missionStage.saveCount));
+		isMissionClear = isKillOver || isSaveOver;
+		return isMissionClear;
 	}
 
 	private void Start() {
@@ -53,6 +87,25 @@ public partial class GameManager : Singleton<GameManager> {
 		if (gamestatus == GameStatus.PROCESS) {
 			// somthing in stage...			
 		}
+
+		if (Input.GetKeyDown(KeyCode.U))
+		{
+			MissionKillAdd(1);
+			var isClear = IsMissionCleared();
+			Debug.Log(string.Format("Is Clear = {0}", isClear));
+		}
+		if (Input.GetKeyDown(KeyCode.I))
+		{
+			MissionSaveAdd(1);
+			var isClear = IsMissionCleared();
+			Debug.Log(string.Format("Is Clear = {0}", isClear));
+		}
+		if (Input.GetKeyDown(KeyCode.O))
+		{
+			StartMission(1);
+			Debug.Log("Reset Mission");
+		}
+
 	}
 
 	public void GameStart()

@@ -1,6 +1,6 @@
-﻿stage,game_time,pass_request,map_id,map_w,map_h
-0,10,2,1,8,6
-1,20,5,2,16,12
-2,30,10,3,32,12
-3,30,10,4,32,24
-4,30,10,5,32,24
+﻿stage,game_time,pass_request,time_count,kill_count,save_count,map_id,map_w,map_h
+0,10,1,10,1,1,1,8,6
+1,20,2,20,2,2,2,16,12
+2,30,3,30,3,3,3,32,12
+3,30,4,40,4,4,4,32,24
+4,30,5,50,5,5,5,32,24
