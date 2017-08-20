@@ -26,7 +26,7 @@ public partial class GameManager : Singleton<GameManager> {
 	private StageTableHandler stageTableHandler = new StageTableHandler();
 	private MapTableHandler mapTableHandler = new MapTableHandler();
 
-	private int stageCount = 3;
+	private int stageCount = 5;
 
 	protected override void Awake()
 	{
@@ -45,7 +45,7 @@ public partial class GameManager : Singleton<GameManager> {
 #else
 		gamestatus = GameStatus.NON;
 		//StartMenu.SetActive(true);
-		#endif
+#endif
 	}
 
 	private void Update()
