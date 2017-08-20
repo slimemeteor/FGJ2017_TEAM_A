@@ -74,7 +74,8 @@ public class CSVReader
 
 			for (var i = 0; i < width; ++i) {
 
-				map[i, j] = int.Parse(values[i]);
+				var jj = height - j - 1;
+				map[i, jj] = int.Parse(values[i]);
 
 			}
 		}

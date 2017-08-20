@@ -17,16 +17,12 @@ public class MapTableHandler
 
 	public void InitData(int _mapCount, int _width, int _height)
 	{
-		for (int i = 1; i <= _mapCount; ++i)
-		{
-			// Ex: ("Data/map_table_01")
-			string file = string.Format("Data/map_table_{0}", i);
-			MapData map = InitData(file, _width, _height);
-			map.mapID = i;
-			map.mapWidth = _width;
-			map.mapHeight = _height;
-			dataDic.Add(i, map);
-		}
+		string file = string.Format("Data/map_table_{0}", _mapCount);
+		MapData map = InitData(file, _width, _height);
+		map.mapID = _mapCount;
+		map.mapWidth = _width;
+		map.mapHeight = _height;
+		dataDic.Add(_mapCount, map);
 	}
 
 	public MapData InitData(string _filename, int _width, int _height)

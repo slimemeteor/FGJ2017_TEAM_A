@@ -26,7 +26,7 @@ public partial class GameManager : Singleton<GameManager> {
 	private StageTableHandler stageTableHandler = new StageTableHandler();
 	private MapTableHandler mapTableHandler = new MapTableHandler();
 
-	private int stageCount = 1;
+	private int stageCount = 3;
 
 	protected override void Awake()
 	{
@@ -35,7 +35,7 @@ public partial class GameManager : Singleton<GameManager> {
 
 		for (int i = 0; i < stageCount; ++i) {
 			StageData stageData = stageTableHandler.GetStageData(i);
-			mapTableHandler.InitData(stageData.mapID, stageData.mapWidth, stageData.mapHeight);
+			mapTableHandler.InitData(i, stageData.mapWidth, stageData.mapHeight);
 		}
 	}
 
@@ -111,6 +111,37 @@ public partial class GameManager : Singleton<GameManager> {
 //		{
 //			StageArray[i].SetActive(_index == i);
 //		}
+	}
+
+	public Vector3 GetPlayerPosition(int stageIndex)
+	{
+		var stage = GetStage(stageIndex);
+
+		var map = GetMap(stage.mapID);
+
+		for (int y = 0; y < map.mapHeight; ++y) {
+
+			for (int x = 0; x < map.mapWidth; ++x) {
+			
+				if (map.mapArray[x,y] == 99) {
+					return new Vector3(x, y, 0);
+				}
+
+			}
+
+		}
+
+		return Vector3.zero;
+	}
+
+	public StageData GetStage(int stageIndex)
+	{
+		return stageTableHandler.GetStageData(stageIndex);
+	}
+
+	public MapData GetMap(int mapID)
+	{
+		return mapTableHandler.GetMapData(mapID);
 	}
 
 	public void NextStage()
